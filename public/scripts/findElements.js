@@ -20,7 +20,7 @@ $(function () {
 
     for(let i=0;i<elements.length;i++) {
       if (elements[i][selected]) {
-        console.log(selected);
+        console.log("base: "+selected+" type:"+elements[i].label);
 
         //check if true/false
         //create and add option
@@ -32,6 +32,8 @@ $(function () {
         .val(elements[i].value)
         .text(elements[i].label);
     }
+
+    //add option to selection
 
     $('#elements').prop('selectedIndex', 0); // resets selection
   });

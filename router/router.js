@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const majorBase = [
+  {value:"select",label:"--Select--"},
   {value:"mCamp",label:"Camp"},
   {value:"mRuins",label:"Ruins"},
   {value:"mChurch",label:"Church"},
