@@ -5,9 +5,11 @@ const path = require('path');
 const router = require('./router/router');
 const exphbs = require('express-handlebars');
 
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.static('public'));
 
 //probably not needed
 // Middlewares
@@ -45,6 +47,9 @@ const hbs = exphbs.create({
 
 // Routes
 app.use('/', router);
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
