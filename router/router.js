@@ -10,20 +10,11 @@ const majorBase = [
   {value:"mNone",label:"None"}
 ]
 
-
-//not needed, in findElements.js
-const elements = [
-  {value: "eNone", label: "None", mCamp:true,mRuins:true,mChurch:true,mFort:true},
-  {value: "eFire", label: "Fire", mCamp:true,mRuins:false,mChurch:true,mFort:false},
-  {value: "eLightning", label: "Lightning", mCamp:true,mRuins:true,mChurch:false,mFort:false},
-  {value: "eMadness", label: "Madness", mCamp:true,mRuins:false,mChurch:false,mFort:false},
-  {value: "ePoison", label: "Poison", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eBleed", label: "Bleed", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eHoly", label: "Holy", mCamp:false,mRuins:true,mChurch:true,mFort:false},
-  {value: "eMagic", label: "Magic", mCamp:false,mRuins:true,mChurch:false,mFort:true},
-  {value: "eDeath", label: "Death", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eSleep", label: "Sleep", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eFrost", label: "Frost", mCamp:false,mRuins:true,mChurch:false,mFort:false}
+const smallBase = [
+  {value:"sCamp",label:"None"},
+  {value:"sChurch",label:"Church"},
+  {value:"sTown",label:"Township"},
+  {value:"sRise",label:"Sorcerer's Rise"}
 ]
 
 
@@ -38,7 +29,7 @@ router.get('/', (req, res) => {
 //find page
 
 router.get('/find', (req, res) => {
-  res.render('find', {majorBase, elements});
+  res.render('find', {majorBase, smallBase});
 })
 
 

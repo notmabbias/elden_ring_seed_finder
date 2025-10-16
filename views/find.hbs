@@ -4,12 +4,50 @@
 
 <h1>Elden Ring Seed Finder</h1>
 
+
+{{!-- form --}}
 <form method="post">
+    {{!-- first base --}}
+    <label for="major1">Major Base 1</label> <br>
     <select name="major1" id="major1">
         {{#each majorBase}}
             <option value="{{value}}">{{label}}</option>
         {{/each}}    
     </select>
-    <select name="elements" id="elements"></select>
+    <select name="elements1" id="elements1"></select>
+    <br><br>
+    
+    {{!-- second base --}}
+    <label for="major2">Major Base 2</label> <br>
+    <select name="major2" id="major2">
+        {{#each majorBase}}
+            <option value="{{value}}">{{label}}</option>
+        {{/each}}   
+    </select>
+    <select name="elements2" id="elements2"></select>
+    <br><br>
+
+    {{!-- small 1 --}}
+    <label for="small1">Minor Base 1</label> <br>
+    <select name="small1" id="small1">
+        {{#each smallBase}}
+            <option value="{{value}}">{{label}}</option>
+        {{/each}}
+    </select>
+    <br><br>
+
+    {{!-- small 2 --}}
+    <label for="small2">Minor Base 2</label> <br>
+    <select name="small2" id="small2">
+        {{#each smallBase}}
+            <option value="{{value}}">{{label}}</option>
+        {{/each}}
+    </select>
+
+
+
+
 </form>
+
+
 

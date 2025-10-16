@@ -14,31 +14,50 @@ const elements = [
 
 $(function () {
   $('#major1').on('change', function () {
-    const selected = String($(this).val()); // ensures it's a string
+    const selected = String($(this).val()); 
+  
+    //empty select elements
+    $('#elements1').empty();
 
-    //probably need an option reset here
-
+    //loop through to check to show
     for(let i=0;i<elements.length;i++) {
       if (elements[i][selected]) {
         console.log("base: "+selected+" type:"+elements[i].label);
 
-        //check if true/false
-        //create and add option
-      }
-
-
-      //create option
+        //add option
         const option = $('<option>')
         .val(elements[i].value)
         .text(elements[i].label);
+
+        //add to elements1
+        $('#elements1').append(option);
+      }
     }
-
-    //add option to selection
-
-    $('#elements').prop('selectedIndex', 0); // resets selection
   });
 });
 
-//write to check selected value against list in router
-//change list in router to be the same (remove sh)
-//display good
+
+$(function () {
+  $('#major2').on('change', function () {
+    const selected = String($(this).val()); 
+  
+    //empty select elements
+    $('#elements2').empty();
+
+    //loop through to check to show
+    for(let i=0;i<elements.length;i++) {
+      if (elements[i][selected]) {
+        console.log("base: "+selected+" type:"+elements[i].label);
+
+        //add option
+        const option = $('<option>')
+        .val(elements[i].value)
+        .text(elements[i].label);
+
+        //add to elements1
+        $('#elements2').append(option);
+      }
+    }
+  });
+});
+
