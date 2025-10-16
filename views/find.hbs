@@ -6,9 +6,19 @@
 
 
 {{!-- form --}}
-<form method="post">
+<form action="/find" method="post">
+
+    {{!-- nightlord --}}
+    <label for="curNightLord">Nightlord</label> <br>
+    <select name="curNightLord" id="curNightLord">
+        {{#each currentNightlord}}
+            <option value="{{value}}">{{value}}</option>
+        {{/each}}
+    </select>
+    <br><br>
+
     {{!-- first base --}}
-    <label for="major1">Major Base 1</label> <br>
+    <label for="major1">Top Major Base</label> <br>
     <select name="major1" id="major1">
         {{#each majorBase}}
             <option value="{{value}}">{{label}}</option>
@@ -18,7 +28,7 @@
     <br><br>
     
     {{!-- second base --}}
-    <label for="major2">Major Base 2</label> <br>
+    <label for="major2">Bottom Major Base</label> <br>
     <select name="major2" id="major2">
         {{#each majorBase}}
             <option value="{{value}}">{{label}}</option>
@@ -28,7 +38,7 @@
     <br><br>
 
     {{!-- small 1 --}}
-    <label for="small1">Minor Base 1</label> <br>
+    <label for="small1">Left Minor Base</label> <br>
     <select name="small1" id="small1">
         {{#each smallBase}}
             <option value="{{value}}">{{label}}</option>
@@ -37,15 +47,15 @@
     <br><br>
 
     {{!-- small 2 --}}
-    <label for="small2">Minor Base 2</label> <br>
+    <label for="small2">Right Minor Base</label> <br>
     <select name="small2" id="small2">
         {{#each smallBase}}
             <option value="{{value}}">{{label}}</option>
         {{/each}}
     </select>
 
-
-
+    <br><br>
+    <button type="submit">find</button>
 
 </form>
 

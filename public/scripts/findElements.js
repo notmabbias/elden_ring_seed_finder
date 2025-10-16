@@ -1,15 +1,15 @@
 const elements = [
-  {value: "eNone", label: "None", mCamp:true,mRuins:true,mChurch:true,mFort:true},
-  {value: "eFire", label: "Fire", mCamp:true,mRuins:false,mChurch:true,mFort:false},
-  {value: "eLightning", label: "Lightning", mCamp:true,mRuins:true,mChurch:false,mFort:false},
-  {value: "eMadness", label: "Madness", mCamp:true,mRuins:false,mChurch:false,mFort:false},
-  {value: "ePoison", label: "Poison", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eBleed", label: "Bleed", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eHoly", label: "Holy", mCamp:false,mRuins:true,mChurch:true,mFort:false},
-  {value: "eMagic", label: "Magic", mCamp:false,mRuins:true,mChurch:false,mFort:true},
-  {value: "eDeath", label: "Death", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eSleep", label: "Sleep", mCamp:false,mRuins:true,mChurch:false,mFort:false},
-  {value: "eFrost", label: "Frost", mCamp:false,mRuins:true,mChurch:false,mFort:false}
+  {value: "None", label: "None", Camp:true,Ruins:true,Great_Church:true,Fort:true},
+  {value: "Fire", label: "Fire", Camp:true,Ruins:false,Great_Church:true,Fort:false},
+  {value: "Lightning", label: "Lightning", Camp:true,Ruins:true,Great_Church:false,Fort:false},
+  {value: "Madness", label: "Madness", Camp:true,Ruins:false,Great_Church:false,Fort:false},
+  {value: "Poison", label: "Poison", Camp:false,Ruins:true,Great_Church:false,Fort:false},
+  {value: "Bleed", label: "Bleed", Camp:false,Ruins:true,Great_Church:false,Fort:false},
+  {value: "Holy", label: "Holy", Camp:false,Ruins:true,Great_Church:true,Fort:false},
+  {value: "Magic", label: "Magic", Camp:false,Ruins:true,Great_Church:false,Fort:true},
+  {value: "Death", label: "Death", Camp:false,Ruins:true,Great_Church:false,Fort:false},
+  {value: "Sleep", label: "Sleep", Camp:false,Ruins:true,Great_Church:false,Fort:false},
+  {value: "Frost", label: "Frost", Camp:false,Ruins:true,Great_Church:false,Fort:false}
 ]
 
 $(function () {

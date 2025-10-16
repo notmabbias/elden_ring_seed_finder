@@ -1,0 +1,52 @@
+
+
+<h2>seed results</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>seed</th><th>nightlord</th><th>shifting_earth</th><th>summonwater</th><th>mistwood</th><th>hawk</th><th>church</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{this.seed}}</td>
+        <td>{{this.nightlord}}{{#if this.s_nightlord}}{{this.s_nightlord}}{{/if}}</td>
+        <td>{{this.shifting_earth}}{{#if this.s_shifting_earth}}{{this.s_shifting_earth}}{{/if}}</td>
+        <td>{{this.summonwater_base}} / {{this.summonwater_element}}{{#if this.s_summonwater_base}}{{this.s_summonwater_base}} / {{this.s_summonwater_element}}{{/if}}</td>
+        <td>{{this.mistwood_base}} / {{this.mistwood_element}}</td>
+        <td>{{this.hawk_small_base}}</td>
+        <td>{{this.church_small_base}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    font-family: sans-serif;
+    font-size: 0.95em;
+  }
+
+  thead {
+    background-color: #f2f2f2;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  tbody tr:hover {
+    background-color: #eef;
+  }
+</style>
