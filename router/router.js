@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { AppDataSource } = require("../db/db");
+const { seed } = require("../entity/seed"); 
 
 const majorBase = [
   {value:"select",label:"--Select--"},
@@ -18,8 +20,6 @@ const smallBase = [
 ]
 
 
-
-
 //home page
 
 router.get('/', (req, res) => {
@@ -35,7 +35,25 @@ router.get('/find', (req, res) => {
 
 
 
+router.get('/test', (req,res) => {
+  res.render('test')
+})
 
+
+router.get("/seed/:id", async (req, res) => {
+  try {
+    const repo = AppDataSource.getRepository(seed);
+    const result = await repo.findOneBy({ seed: parseInt(req.params.id) });
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).send("Seed not found");
+    }
+  } catch (err) {
+    console.error("Query error:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 
 

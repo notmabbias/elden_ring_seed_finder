@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const router = require('./router/router');
 const exphbs = require('express-handlebars');
+const { AppDataSource } = require('./db/db');
 
 
 const app = express();
@@ -25,6 +26,13 @@ app.use(session({
     maxAge: 1000 * 60 * 60 // 1 hour
   }
 }));
+
+
+//connect db
+AppDataSource.initialize().then(() => {
+  console.log("db connected");
+}).catch(err => console.error(err));
+
 
 // Views setup (Handlebars)
 app.set('views', path.join(__dirname, 'views'));
