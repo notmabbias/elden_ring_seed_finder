@@ -6,7 +6,6 @@ const { seed } = require("../entity/seed");
 const AppDataSource = new DataSource({
     type:"sqlite",
     database: path.resolve(__dirname, "..", "data", "seedDB.db"),
-    logging: true,
     entities: [seed]
 })
 
