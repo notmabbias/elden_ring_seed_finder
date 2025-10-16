@@ -62,6 +62,8 @@ router.post('/find', async (req, res) => {
   //logic for db
 
 
+  //add logic for libra and maris seed
+
 
   try {
     const rows = await AppDataSource.manager
