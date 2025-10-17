@@ -142,10 +142,11 @@ router.get("/seed/:id", async (req, res) => {
 
 
 
-// Login page
-router.get('/login', (req, res) => {
-  res.render('login');
-});
+//timer page
+router.get("/timer", (req, res) => {
+  res.render('timer')
+})
+
 
 // Handle login form submit
 router.post('/login', (req, res) => {
@@ -160,22 +161,7 @@ router.post('/login', (req, res) => {
   res.redirect('/dashboard');
 });
 
-// Dashboard (protected)
-router.get('/dashboard', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/login');
-  }
-  res.render('dashboard', { user: req.session.user });
-});
 
-// Logout
-router.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) return res.send('Error logging out');
 
-    res.clearCookie('connect.sid');
-    res.redirect('/login');
-  });
-});
 
 module.exports = router;
