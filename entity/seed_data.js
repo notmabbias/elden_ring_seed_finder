@@ -1,42 +1,38 @@
 const { EntitySchema } = require("typeorm");
 
-module.exports.seed = new EntitySchema({
-    name: "seed",
-    tableName:"seed_repository",
+module.exports.seed_data = new EntitySchema({
+    name:"seed_data",
+    tableName:"seed_data",
     columns: {
         seed: {
             primary: true,
             type: "int"
         },
-        nightlord: {
+        event: {
             type:"text",
             nullable: false
         },
-        shifting_earth: {
+        boss1: {
             type:"text",
             nullable: false
         },
-        summonwater_base: {
+        boss2: {
             type:"text",
             nullable: false
         },
-        summonwater_element: {
+        extra_boss: {
             type:"text",
             nullable: false
         },
-        mistwood_base: {
+        castle_enemy: {
             type:"text",
             nullable: false
         },
-        mistwood_element: {
+        top_castle: {
             type:"text",
             nullable: false
         },
-        hawk_small_base: {
-            type:"text",
-            nullable: false
-        },
-        church_small_base: {
+        bottom_castle: {
             type:"text",
             nullable: false
         }

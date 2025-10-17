@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { AppDataSource } = require("../db/db");
 const { seed } = require("../entity/seed"); 
-const { createQueryBuilder } = require('typeorm');
+const { seed_data } = require("../entity/seed_data")
 
 const majorBase = [
   {value:"select",label:"--Select--"},
@@ -61,6 +61,7 @@ router.post('/find', async (req, res) => {
   
   //logic for db
 
+  let currentSeed = 0;
 
   //add logic for libra and maris seed
 
@@ -78,13 +79,21 @@ router.post('/find', async (req, res) => {
     .andWhere('s.church_small_base = :small2', {small2: req.body.small2})
     .getMany();
 
-    res.render('result', {data: rows, formData: req.body})
+    currentSeed = rows[0].seed;
+  
+    const extraData = await AppDataSource.manager
+    .createQueryBuilder(seed_data,'sd')
+    .select('sd')
+    .where('sd.seed = :seed',{seed: currentSeed})
+    .getMany();
 
-    
+
+
+    res.render('result', {data: rows, extraData: extraData, formData: req.body})
     
   } catch (err) {
     console.error("query error:", err);
-    res.status(500).send("whoops!!!")
+    res.status(500).redirect("seedError")
   }
 
 
@@ -92,7 +101,9 @@ router.post('/find', async (req, res) => {
 
 })
 
-
+router.get('/seedError', (req,res) => {
+  res.render('seedError')
+}) 
 
 
 
