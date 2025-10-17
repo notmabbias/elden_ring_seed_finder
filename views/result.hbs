@@ -1,86 +1,39 @@
 <head>
   <link rel="stylesheet" href="css/result.css">
 </head>
-<h2>seed results</h2>
 
 <!-- map -->
 
 <div class="row">
   <div class="left">
-    <img src="../seedMap/{{data.0.seed}}.jpg" alt="no seed ig" width="780" height="780">
+    <img src="../seedMap/{{data.0.seed}}.jpg" alt="no seed img found" width="940" height="940">
   </div>
 
 <!-- list -->
 
-  <div class="right">
+<div class="right">
+  <div class="scroll-zone">
+    <h2>Extra Data</h2>
     <ul>
       {{#each extraData}}
-      <li><strong>Event: </strong>{{this.event}}</li>
-      <li><strong>Night 1 Boss: </strong>{{this.boss1}}</li>
-      <li><strong>Night 2 Boss: </strong>{{this.boss2}}</li>
-      <li><strong>Extra Boss: </strong>{{this.extra_boss}}</li><br>
-      <li><strong>Top Castle Boss: </strong>{{this.top_castle}}</li>
-      <li><strong>Bottom Castle Boss: </strong>{{this.bottom_castle}}</li>
-      <li><strong>Castle Enemy: </strong>{{this.castle_enemy}}</li>
+        <li><strong>Night 1 Boss: </strong>{{this.boss1}}</li>
+        <li><strong>Night 2 Boss: </strong>{{this.boss2}}</li><br>
+        <li><strong>Top Castle Boss: </strong>{{this.top_castle}}</li>
+        <li><strong>Bottom Castle Boss: </strong>{{this.bottom_castle}}</li>
+        <li><strong>Castle Enemy: </strong>{{this.castle_enemy}}</li><br>
+        {{#hideFalse this.event}}<li><strong>Event: </strong>{{this.event}}</li>{{/hideFalse}}
+        {{#hideFalse this.extra_boss}}<li><strong>Extra Boss: </strong>{{this.extra_boss}}</li>{{/hideFalse}}
       {{/each}}
     </ul>
   </div>
-  <a href="find">back</a>
+  <h2 class="bottom-label">{{data.0.nightlord}} seed #{{data.0.seed}}</h2>
 </div>
 
 
 
-<!-- table -->
 
 
-<table>
-  <thead>
-    <tr>
-      <th>seed</th><th>nightlord</th><th>shifting_earth</th><th>summonwater</th><th>mistwood</th><th>hawk</th><th>church</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each data}}
-      <tr>
-        <td>{{this.seed}}</td>
-        <td>{{this.nightlord}}{{#if this.s_nightlord}}{{this.s_nightlord}}{{/if}}</td>
-        <td>{{this.shifting_earth}}{{#if this.s_shifting_earth}}{{this.s_shifting_earth}}{{/if}}</td>
-        <td>{{this.summonwater_base}} / {{this.summonwater_element}}{{#if this.s_summonwater_base}}{{this.s_summonwater_base}} / {{this.s_summonwater_element}}{{/if}}</td>
-        <td>{{this.mistwood_base}} / {{this.mistwood_element}}</td>
-        <td>{{this.hawk_small_base}}</td>
-        <td>{{this.church_small_base}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
-
-<style>
-    table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1em;
-    font-family: sans-serif;
-    font-size: 0.95em;
-  }
-
-  thead {
-    background-color: #f2f2f2;
-  }
-
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    text-align: left;
-  }
-
-  tbody tr:nth-child(even) {
-    background-color: #fafafa;
-  }
-
-  tbody tr:hover {
-    background-color: #eef;
-  }
-  
+<style>  
   .row {
     display: flex;
     gap: 16px;
@@ -88,24 +41,44 @@
   }
 
   .left {
-    flex: 0 0 780px;
-    width: 780px;
-    height: 780px;
+    flex: 0 0 940px;
+    width: 940px;
+    height: 940px;
   }
 
   .left img {
-    width: 780px;
-    height: 780px;
+    width: 940px;
+    height: 940px;
     display: block;
     object-fit: cover;
   }
 
-  .right {
-    flex: 1 1 0;
-    min-width: 280px;
-    max-height: 780px;
-    overflow: auto;
-  }
+.right {
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  max-height: 940px;
+  height: 940px;
+  position: relative;
+}
+
+.scroll-zone {
+  flex: 1;
+  overflow: auto;
+}
+
+.bottom-label {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 1.2em;
+  z-index: 1000;
+}
+
+
+
 
   .right ul {
     margin: 0;
@@ -123,8 +96,8 @@
 
   @media (max-width: 520px) {
     .row { flex-direction: column; align-items: center; }
-    .left { width: 780px; height: 780px; }
-    .left img { width: 780px; height: 780px; }
+    .left { width: 940px; height: 940px; }
+    .left img { width: 940px; height: 940px; }
     .right { max-width: 90vw; max-height: none; overflow: visible; }
   }
 

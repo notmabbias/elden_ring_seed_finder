@@ -34,9 +34,7 @@ AppDataSource.initialize().then(() => {
 }).catch(err => console.error(err));
 
 
-// Views setup (Handlebars)
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+
 
 
 //Helpers
@@ -48,10 +46,21 @@ const hbs = exphbs.create({
         incrementPage: (value) => parseInt(value) + 1,
         decrementPage: (value) => parseInt(value) - 1,
         gt: (a, b) => a > b, //greater than
-        lt: (a, b) => a < b //less than 
+        lt: (a, b) => a < b, //less than
+
+        hideFalse: function(value, options) {
+          const s = String(value).trim().toUpperCase();
+          if (s === "FALSE") return '';
+          return options.fn(this);
+        }
     }
 })
 
+
+// Views setup (Handlebars)
+app.engine('hbs', hbs.engine);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
 // Routes
 app.use('/', router);

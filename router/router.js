@@ -17,7 +17,7 @@ const smallBase = [
   {value:"Nothing",label:"None"},
   {value:"Church",label:"Church"},
   {value:"Township",label:"Township"},
-  {value:"Rise",label:"Sorcerer's Rise"},
+  {value:"Rise",label:"Rise"},
   {value:"Difficult_Rise",label:"Difficult Rise"}
 ]
 
@@ -71,6 +71,7 @@ router.post('/find', async (req, res) => {
     .createQueryBuilder(seed,'s')
     .select('s')
     .where('s.nightlord = :nightlord',{ nightlord: req.body.curNightLord})
+    .andWhere('s.shifting_earth = :earth', {earth: req.body.shifting_earth_sel})
     .andWhere('s.summonwater_base = :base1', { base1: req.body.major1})
     .andWhere('s.summonwater_element = :element1', {element1: req.body.elements1})
     .andWhere('s.mistwood_base = :base2', {base2: req.body.major2})
