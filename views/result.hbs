@@ -1,6 +1,5 @@
-<head>
-  <link rel="stylesheet" href="css/result.css">
-</head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../scripts/timer.js"></script>
 
 <!-- map -->
 
@@ -24,11 +23,20 @@
         {{#hideFalse this.event}}<li><strong>Event: </strong>{{this.event}}</li>{{/hideFalse}}
         {{#hideFalse this.extra_boss}}<li><strong>Extra Boss: </strong>{{this.extra_boss}}</li>{{/hideFalse}}
       {{/each}}
+
     </ul>
   </div>
-  <h2 class="bottom-label">{{data.0.nightlord}} seed #{{data.0.seed}}</h2>
-</div>
 
+  <h1 class="ringStart-label" id="ringStart">Ring 1 Starts In: 4:25</h1>
+  <h1 class="ringClose-label" id="ringClose"></h1>
+
+  <div class="timerReset-label">
+    <h3 id="timerReset"></h3>
+  </div>
+
+  <h2 class="bottom-label"><a href="/find" style="color:#e0e0e0">{{data.0.nightlord}} seed #{{data.0.seed}}</a></h2>
+
+</div>
 
 
 
@@ -55,7 +63,7 @@
 
 .right {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-width: 280px;
   max-height: 940px;
   height: 940px;
@@ -74,6 +82,38 @@
   margin: 0;
   padding: 6px 12px;
   font-size: 1.2em;
+  z-index: 1000;
+  text-decoration: none;
+  color: #e0e0e0;
+}
+
+.ringStart-label {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 1.7em;
+  z-index: 1000;
+}
+
+.ringClose-label {
+  position: fixed;
+  top: 52px;
+  right: 12px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 1.7em;
+  z-index: 1000;
+}
+
+.timerReset-label {
+  position: fixed;
+  top: 52px;
+  right: 12px;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 1.5em;
   z-index: 1000;
 }
 
@@ -148,6 +188,19 @@
   .right li strong {
     color: #fff;
   }
+
+    #timerReset { cursor: pointer; }
+    #timerReset.press { cursor: grab; }   
+
+body {
+  font-family: Helvetica, serif;
+}
+
+
+
+
+
+
 
 
 </style>
