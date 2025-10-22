@@ -47,7 +47,7 @@ const currentNightlord = [
 //home page
 
 router.get('/', (req, res) => {
-  res.render('home');
+  res.redirect('find');
 })
 
 //find page
