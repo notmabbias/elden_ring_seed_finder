@@ -77,7 +77,7 @@ $(function() {
     $('#timerReset')
     .on('mouseup mouseleave touchend touchcancel', function() { $(this).removeClass('press'); })
     .on('click', function() {
-        startTimer(300,"winner winner chicken dinner?",false); 
+        startTimer(300,"good luck!",false); 
     });
 
 
