@@ -41,9 +41,6 @@ const currentNightlord = [
 ];
 
 
-
-
-
 //home page
 
 router.get('/', (req, res) => {
@@ -64,6 +61,8 @@ router.post('/find', async (req, res) => {
   let currentSeed = 0;
 
   //add logic for libra and maris seed
+
+  const foundSeed = findSeed(req.body.curNightLord,req.body.shifting_earth_sel,req.body.major1,req.body.elements1,req.body.major2,req.body.elements2,req.body.small1,req.body.small2)
 
 
   try {
@@ -161,6 +160,72 @@ router.post('/login', (req, res) => {
   res.redirect('/dashboard');
 });
 
+function findSeed(nightlordInput,shiftingEarthInput, base1Input, element1Input, base2Input, element2Input, small1Input, small2Input) {
+  try {
+    const selectResult = AppDataSource.manager
+    .createQueryBuilder(seed,'s')
+    .select('s')
+    .where('s.nightlord = :nightlord', {nightlord: nightlordInput})
+    .andWhere('s.shifting_earth = :earth', {earth: shiftingEarthInput})
+    .andWhere('s.summonwater_base = :base1', {base1: base1Input})
+    .andWhere('s.summonwater_element = :element1', {element1: element1Input})
+    .andWhere('s.mistwood_base = :base2', {base2: base2Input})
+    .andWhere('s.mistwood_element = :element2', {element2: element2Input})
+    .andWhere('s.hawk_small_base = :small1', {small1: small1Input})
+    .andWhere('s.church_small_base = :small2', {small2: small2Input})
+    .getMany();
+
+    return selectResult;
+  }
+  catch (err) {
+    console.error("query error:\n", err);
+    res.status(500).redirect("seedError");
+  }
+  
+}
+
+function getExtraData(inputSeed) {
+  const extraData = AppDataSource.manager
+  .createQueryBuilder(seed_data,'sd')
+  .select('sd')
+  .where('sd.seed = :seed', {seed: inputSeed})
+  .getMany();
+
+  return extraData;
+}
+
+
+function stringReader(inputString) {
+  //example string:
+  //d(shiftingearth)cf(camp,fire)gn(church,none)cr(church,rise)
+  //dcfgncr
+
+  earthPairs = [
+    {'d':'Default'},
+    {'m':'Mountaintop'},
+    {'c':'Crater'},
+    {'r:':'Rotted_Woods'},
+    {'n':'Noklateo'}
+  ]
+
+
+
+
+  const checkString = inputString.toLowerCase();
+
+  if (checkString.length() !== 7) {
+    console.log("incorrect string size")
+  }
+
+  
+
+
+
+
+  
+
+
+}
 
 
 
