@@ -6,45 +6,45 @@ const { seed_data } = require("../entity/seed_data")
 
 const majorBase = [
   {value:"select",label:"--Select--"},
-  {value:"Camp",label:"Camp"},
-  {value:"Ruins",label:"Ruins"},
-  {value:"Great_Church",label:"Church"},
-  {value:"Fort",label:"Fort"},
-  {value:"None",label:"None"}
+  {value:"Camp",label:"Camp",short:'c'},
+  {value:"Ruins",label:"Ruins",short:'r'},
+  {value:"Great_Church",label:"Church",short:'g'},
+  {value:"Fort",label:"Fort",short:'f'},
+  {value:"None",label:"None",short:'n'}
 ]
 
 const smallBase = [
-  {value:"Nothing",label:"None"},
-  {value:"Church",label:"Church"},
-  {value:"Township",label:"Township"},
-  {value:"Rise",label:"Rise"},
-  {value:"Difficult_Rise",label:"Difficult Rise"}
+  {value:"Nothing",label:"None",short:'n'},
+  {value:"Church",label:"Church",short:'c'},
+  {value:"Township",label:"Township",short:'t'},
+  {value:"Rise",label:"Rise", short:'r'},
+  {value:"Difficult_Rise",label:"Difficult Rise",short:'d'}
 ]
 
 const shifting_earth = [
-  {value:"Default",label:"Default"},
-  {value:"Mountaintop",label:"Mountaintop"},
-  {value:"Crater",label:"Crater"},
-  {value:"Rotted_Woods",label:"Rotted Woods"},
-  {value:"Noklateo",label:"Noklateo"},
+  {value:"Default",label:"Default",short:'d'},
+  {value:"Mountaintop",label:"Mountaintop",short:'m'},
+  {value:"Crater",label:"Crater",short:'c'},
+  {value:"Rotted_Woods",label:"Rotted Woods",short:'r'},
+  {value:"Noklateo",label:"Noklateo",short:'n'},
 ]
 
 const currentNightlord = [
-  { value: "Gladius", label: "Gladius" },
-  { value: "Adel", label: "Adel" },
-  { value: "Gnoster", label: "Gnoster" },
-  { value: "Maris", label: "Maris" },
-  { value: "Libra", label: "Libra" },
-  { value: "Fulghor", label: "Fulghor" },
-  { value: "Caligo", label: "Caligo" },
-  { value: "Heolstor", label: "Heolstor" },
+  { value: "Gladius", label: "Gladius",short:'t'},
+  { value: "Adel", label: "Adel",short:'a'},
+  { value: "Gnoster", label: "Gnoster",short:'g'},
+  { value: "Maris", label: "Maris",short:'m'},
+  { value: "Libra", label: "Libra",short:'l'},
+  { value: "Fulghor", label: "Fulghor",short:'f'},
+  { value: "Caligo", label: "Caligo",short:'c'},
+  { value: "Heolstor", label: "Heolstor",short:'h'},
 ];
 
 
 //home page
 
 router.get('/', (req, res) => {
-  res.render('home');
+  res.redirect('find');
 })
 
 //find page render
@@ -63,7 +63,7 @@ router.post('/find', async (req, res) => {
 
   //check if arary has return anything, if not redirect to error page
   if (!Array.isArray(foundSeed) || foundSeed.length === 0) {
-    res.status(500).redirect("seedError");
+    res.render('seedError', {link:'find'})
   }
   //if array returns something, grab extra data and render result page
   else {
@@ -75,14 +75,31 @@ router.post('/find', async (req, res) => {
 
 //string page render
 router.get('/string',(req, res) => {
-  res.render('string')
+  res.render('string', {currentNightlord})
 })
 
 router.post('/string', async (req, res) => {
-  console.log(req.body.stringInput);
-  //just for now - not an actual error
-  stringReader(req.body.stringInput)
-  res.redirect('seedError')
+  const inputArray = stringReader(req.body.stringInput)
+  const foundSeed = await findSeed
+  (
+    inputArray[0],
+    inputArray[1],
+    inputArray[2],
+    inputArray[3],
+    inputArray[4],
+    inputArray[5],
+    inputArray[6],
+    inputArray[7]
+  )
+  if (!Array.isArray(foundSeed) || foundSeed.length === 0) {
+    console.log("seedError")
+    res.render('seedError', {link:'string'})
+  }
+  else {
+    const extraData = await getExtraData(foundSeed[0].seed);
+    //send data to page to be rendered
+    res.render('result', {data: foundSeed, extraData: extraData, formData: req.body})
+  }
 })
 
 router.get('/seedError', (req,res) => {
@@ -186,39 +203,70 @@ async function getExtraData(inputSeed) {
 
 
 function stringReader(inputString) {
-  //example string:
-  //d(shiftingearth)cf(camp,fire)gn(church,none)cr(church,rise)
-  //dcfgncr
 
-  earthPairs = [
-    {'d':'Default'},
-    {'m':'Mountaintop'},
-    {'c':'Crater'},
-    {'r:':'Rotted_Woods'},
-    {'n':'Noklateo'}
-  ]
+  const elementsString = [
+  { value: "None", short: "n" },
+  { value: "Fire", short: "f" },
+  { value: "Lightning", short: "l" },
+  { value: "Madness", short: "m" },
+  { value: "Poison", short: "p" },
+  { value: "Bleed", short: "b" },
+  { value: "Holy", short: "h" },
+  { value: "Magic", short: "i" },
+  { value: "Death", short: "d" },
+  { value: "Sleep", short: "s" },
+  { value: "Frost", short: "c" }
+];
+
+  const result = [];
 
   const checkString = inputString.toLowerCase().trim();
 
-  if (checkString.length !== 7) {
-    console.log("incorrect string size")
-    return null;
-  }
-
   for (let i=0; i<checkString.length;i++) {
-    console.log(checkString[i])
+
+
+    if (i===0) {
+      //nightlord
+      for (let k=0;k<currentNightlord.length;k++) {
+        if (checkString[i] == currentNightlord[k].short) {
+          result.push(currentNightlord[k].value)
+        }
+      }
+    }
+    if (i===1) {
+      //shifting earth
+      for (let k=0;k<shifting_earth.length;k++) {
+        if (checkString[i] === shifting_earth[k].short) {
+          result.push(shifting_earth[k].value) //adds to end of array
+        }
+      }
+    }
+    if (i===2 || i===4) {
+      //major base
+      for (let k=0;k<majorBase.length;k++) {
+        if (checkString[i] === majorBase[k].short) {
+          result.push(majorBase[k].value) 
+        }
+      }
+    }
+    if (i===3 || i===5) {
+      //elements
+      for (let k=0;k<elementsString.length;k++) {
+        if (checkString[i] === elementsString[k].short) {
+          result.push(elementsString[k].value)
+        }
+      }
+    }
+    if (i>5) {
+      //small base
+      for (let k=0;k<smallBase.length;k++) {
+        if (checkString[i] === smallBase[k].short) {
+          result.push(smallBase[k].value)
+        }
+      }
+    }
   }
-
-  
-
-
-
-
-  
-
-
+  return result;
 }
-
-
 
 module.exports = router;
