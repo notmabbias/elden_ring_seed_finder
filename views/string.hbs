@@ -1,0 +1,76 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../scripts/findElements.js"></script>
+
+
+<h1>Elden Ring Seed Finder</h1>
+
+
+{{!-- form --}}
+<form action="/string" method="post">
+
+    <label for="stringInput">String Input</label><br>
+    <input type="text" id="stringInput" name="stringInput" placeholder="enter string">
+
+    <br><br>
+
+    <button type="submit">find</button>
+
+</form>
+
+
+
+    <style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ffffff;
+        margin-bottom: 24px;
+    }
+
+    label {
+        color: #cccccc;
+        font-weight: 500;
+    }
+
+    select, button {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        border: 1px solid #444;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 1rem;
+        margin-top: 4px;
+    }
+
+    select:focus, button:focus {
+        outline: none;
+        border-color: #4aa3ff;
+    }
+
+    button {
+        background-color: #2a2a2a;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #3a3a3a;
+    }
+
+    form {
+        max-width: 600px;
+    }
+
+    br {
+        line-height: 1.5;
+    }
+    </style>
+
+
+
+

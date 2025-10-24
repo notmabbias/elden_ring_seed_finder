@@ -47,58 +47,42 @@ router.get('/', (req, res) => {
   res.render('home');
 })
 
-//find page
-
+//find page render
 router.get('/find', (req, res) => {
   res.render('find', {majorBase, smallBase, shifting_earth, currentNightlord});
 })
 
+//post for selection page
 router.post('/find', async (req, res) => {
-  const nightLordQuery = req.query.nightlord;
   
-  //logic for db
-
-  let currentSeed = 0;
-
   //add logic for libra and maris seed
 
-  const foundSeed = findSeed(req.body.curNightLord,req.body.shifting_earth_sel,req.body.major1,req.body.elements1,req.body.major2,req.body.elements2,req.body.small1,req.body.small2)
+  //find seed
+  const foundSeed = await findSeed(req.body.curNightLord,req.body.shifting_earth_sel,req.body.major1,req.body.elements1,req.body.major2,req.body.elements2,req.body.small1,req.body.small2)
+  //find extra data for seed, if seed found
 
-
-  try {
-    const rows = await AppDataSource.manager
-    .createQueryBuilder(seed,'s')
-    .select('s')
-    .where('s.nightlord = :nightlord',{ nightlord: req.body.curNightLord})
-    .andWhere('s.shifting_earth = :earth', {earth: req.body.shifting_earth_sel})
-    .andWhere('s.summonwater_base = :base1', { base1: req.body.major1})
-    .andWhere('s.summonwater_element = :element1', {element1: req.body.elements1})
-    .andWhere('s.mistwood_base = :base2', {base2: req.body.major2})
-    .andWhere('s.mistwood_element = :element2', {element2: req.body.elements2})
-    .andWhere('s.hawk_small_base = :small1', {small1: req.body.small1})
-    .andWhere('s.church_small_base = :small2', {small2: req.body.small2})
-    .getMany();
-
-    currentSeed = rows[0].seed;
-  
-    const extraData = await AppDataSource.manager
-    .createQueryBuilder(seed_data,'sd')
-    .select('sd')
-    .where('sd.seed = :seed',{seed: currentSeed})
-    .getMany();
-
-
-
-    res.render('result', {data: rows, extraData: extraData, formData: req.body})
-    
-  } catch (err) {
-    console.error("query error:", err);
-    res.status(500).redirect("seedError")
+  //check if arary has return anything, if not redirect to error page
+  if (!Array.isArray(foundSeed) || foundSeed.length === 0) {
+    res.status(500).redirect("seedError");
   }
+  //if array returns something, grab extra data and render result page
+  else {
+    const extraData = await getExtraData(foundSeed[0].seed);
+    //send data to page to be rendered
+    res.render('result', {data: foundSeed, extraData: extraData, formData: req.body})
+  }
+})
 
+//string page render
+router.get('/string',(req, res) => {
+  res.render('string')
+})
 
-  //res.render('result', {data: req.body})
-
+router.post('/string', async (req, res) => {
+  console.log(req.body.stringInput);
+  //just for now - not an actual error
+  stringReader(req.body.stringInput)
+  res.redirect('seedError')
 })
 
 router.get('/seedError', (req,res) => {
@@ -160,9 +144,9 @@ router.post('/login', (req, res) => {
   res.redirect('/dashboard');
 });
 
-function findSeed(nightlordInput,shiftingEarthInput, base1Input, element1Input, base2Input, element2Input, small1Input, small2Input) {
+async function findSeed(nightlordInput,shiftingEarthInput, base1Input, element1Input, base2Input, element2Input, small1Input, small2Input) {
   try {
-    const selectResult = AppDataSource.manager
+    const selectResult = await AppDataSource.manager
     .createQueryBuilder(seed,'s')
     .select('s')
     .where('s.nightlord = :nightlord', {nightlord: nightlordInput})
@@ -178,20 +162,26 @@ function findSeed(nightlordInput,shiftingEarthInput, base1Input, element1Input, 
     return selectResult;
   }
   catch (err) {
-    console.error("query error:\n", err);
+    console.error("seed query error:\n", err);
     res.status(500).redirect("seedError");
   }
   
 }
 
-function getExtraData(inputSeed) {
-  const extraData = AppDataSource.manager
-  .createQueryBuilder(seed_data,'sd')
-  .select('sd')
-  .where('sd.seed = :seed', {seed: inputSeed})
-  .getMany();
+async function getExtraData(inputSeed) {
+  try {
+    const extraData = await AppDataSource.manager
+    .createQueryBuilder(seed_data,'sd')
+    .select('sd')
+    .where('sd.seed = :seed', {seed: inputSeed})
+    .getMany();
 
-  return extraData;
+    return extraData;
+  }
+  catch (err) {
+    console.error("extra data query error:\n",err) 
+    res.status(500).redirect("seedError")
+  }
 }
 
 
@@ -208,13 +198,15 @@ function stringReader(inputString) {
     {'n':'Noklateo'}
   ]
 
+  const checkString = inputString.toLowerCase().trim();
 
-
-
-  const checkString = inputString.toLowerCase();
-
-  if (checkString.length() !== 7) {
+  if (checkString.length !== 7) {
     console.log("incorrect string size")
+    return null;
+  }
+
+  for (let i=0; i<checkString.length;i++) {
+    console.log(checkString[i])
   }
 
   
